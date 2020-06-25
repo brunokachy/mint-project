@@ -7,5 +7,5 @@ import com.mint.project.core.cardverification.model.CardVerifyResult;
  */
 public interface CardVerifyService {
 
-	CardVerifyResult verify(String cardNumber);
+	CardVerifyResult verify(Integer cardNumber);
 }

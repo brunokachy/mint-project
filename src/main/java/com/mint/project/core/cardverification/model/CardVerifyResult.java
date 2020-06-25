@@ -8,7 +8,7 @@ import lombok.Getter;
  * @author Bruno Okafor 2020-06-25
  */
 @Getter
-@AllArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
+@AllArgsConstructor(staticName = "of")
 public class CardVerifyResult {
 
 	private boolean success;

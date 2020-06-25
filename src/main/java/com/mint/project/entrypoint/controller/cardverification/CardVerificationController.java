@@ -1,6 +1,8 @@
 package com.mint.project.entrypoint.controller.cardverification;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,11 @@ public class CardVerificationController {
 	private final CardVerifyService cardVerifyService;
 
 	@GetMapping(value = "card-scheme/verify/{cardNumber}")
-	public ResponseEntity<CardVerifyResponse> verifyCard(@PathVariable("cardNumber") @NotBlank final String cardNumber) {
+	public ResponseEntity<CardVerifyResponse> verifyCard(
+			@PathVariable("cardNumber")
+			@NotNull @Positive @Size(min = 6, max = 6)
+			final Integer cardNumber
+	) {
 
 		final CardVerifyResult cardVerifyResult = cardVerifyService.verify(cardNumber);
 

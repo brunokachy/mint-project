@@ -10,7 +10,7 @@ import lombok.Getter;
  * @author Bruno Okafor 2020-06-25
  */
 @Getter
-@AllArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
+@AllArgsConstructor(staticName = "of")
 public class CardStatResult {
 
 	private boolean success;
@@ -21,5 +21,5 @@ public class CardStatResult {
 
 	private int limit;
 
-	private Map<String, Integer> payload;
+	private Map<String, Long> payload;
 }
