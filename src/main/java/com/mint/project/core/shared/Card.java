@@ -1,6 +1,5 @@
 package com.mint.project.core.shared;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,8 +7,10 @@ import lombok.Getter;
  * @author Bruno Okafor 2020-06-25
  */
 @Getter
-@AllArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
+@AllArgsConstructor(staticName = "of")
 public class Card {
+
+	private long id;
 
 	private boolean isSuccess;
 
@@ -32,6 +33,7 @@ public class Card {
 	) {
 
 		return new Card(
+				0l,
 				isSuccess,
 				cardNumber,
 				scheme,
@@ -44,6 +46,7 @@ public class Card {
 	public static Card createExistingCard(final Card card) {
 
 		return new Card(
+				card.getId(),
 				Boolean.TRUE,
 				card.getCardNumber(),
 				card.getScheme(),

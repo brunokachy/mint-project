@@ -1,9 +1,9 @@
 package com.mint.project.core.cardstats.service.impl;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.mint.project.core.cardstats.model.CardStatResult;
@@ -24,13 +24,11 @@ public class CardStatServiceImpl implements CardStatService {
 	@Override
 	public CardStatResult getCardStats(final int start, final int limit) {
 
-		final Page<Card> cardPage = cardPersistenceService.getCards(start, limit);
+		final List<Card> cardPage = cardPersistenceService.getCards(start, limit);
 
-		final long size = cardPage.getTotalElements();
+		final long size = cardPage.size();
 
-		final Map<String, Long> payload = new HashMap<>();
-
-		cardPage.get().forEach(card -> payload.put(card.getCardNumber(), card.getTotalRequest()));
+		final Map<String, Long> payload = cardPage.stream().collect(Collectors.toMap(Card::getCardNumber, Card::getTotalRequest, (a, b) -> b));
 
 		return CardStatResult.of(Boolean.TRUE, size, start, limit, payload);
 	}

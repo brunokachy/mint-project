@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.mint.project.core.shared.Card;
 import com.mint.project.core.cardverification.model.CardVerifyResult;
 import com.mint.project.core.cardverification.service.CardIntegrationService;
 import com.mint.project.core.cardverification.service.CardVerifyService;
+import com.mint.project.core.shared.Card;
 import com.mint.project.core.shared.CardPersistenceService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ public class CardVerifyServiceImpl implements CardVerifyService {
 	private final CardIntegrationService cardIntegrationService;
 
 	@Override
-	public CardVerifyResult verify(final Integer cardNumber) {
+	public CardVerifyResult verify(Integer cardNumber) {
 
 		final Optional<Card> optionalCard = cardPersistenceService.findCardByCardNumber(cardNumber);
 

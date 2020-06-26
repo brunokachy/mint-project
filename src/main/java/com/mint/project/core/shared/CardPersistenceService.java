@@ -1,8 +1,7 @@
 package com.mint.project.core.shared;
 
+import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.domain.Page;
 
 /**
  * @author Bruno Okafor 2020-06-25
@@ -13,5 +12,7 @@ public interface CardPersistenceService {
 
 	void saveCard(Card card);
 
-	Page<Card>  getCards(int start, int limit);
+	void updateCard(Card card);
+
+	List<Card> getCards(int start, int limit);
 }
