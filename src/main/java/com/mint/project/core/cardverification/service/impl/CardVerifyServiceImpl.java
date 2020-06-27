@@ -28,7 +28,15 @@ public class CardVerifyServiceImpl implements CardVerifyService {
 		final Optional<Card> optionalCard = cardPersistenceService.findCardByCardNumber(cardNumber);
 
 		if (optionalCard.isPresent()) {
-			final Card card = Card.createExistingCard(optionalCard.get());
+			final Card existingCard = optionalCard.get();
+			final Card card = Card.createExistingCard(
+					existingCard.getId(),
+					cardNumber,
+					existingCard.getScheme(),
+					existingCard.getType(),
+					existingCard.getBank(),
+					existingCard.getTotalRequest()
+			);
 			cardPersistenceService.updateCard(card);
 			return buildResponse(card);
 		}

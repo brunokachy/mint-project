@@ -1,6 +1,7 @@
 package com.mint.project.core.shared;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor(staticName = "of")
+@EqualsAndHashCode
 public class Card {
 
 	private long id;
@@ -43,16 +45,23 @@ public class Card {
 		);
 	}
 
-	public static Card createExistingCard(final Card card) {
+	public static Card createExistingCard(
+			final long id,
+			final Integer cardNumber,
+			final String scheme,
+			final String type,
+			final String bank,
+			final long totalRequest
+	) {
 
 		return new Card(
-				card.getId(),
+				id,
 				Boolean.TRUE,
-				card.getCardNumber(),
-				card.getScheme(),
-				card.getType(),
-				card.getBank(),
-				card.getTotalRequest() + 1
+				cardNumber,
+				scheme,
+				type,
+				bank,
+				totalRequest + 1
 		);
 	}
 
