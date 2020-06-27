@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  kafka:
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: $CF_HOST_IP
+      KAFKA_MESSAGE_MAX_BYTES: 2000000
+     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    mint-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+       spring-boot-kafka-network:
+         ipv4_address: 172.20.0.12
+    depends_on:
+      - kafka
+networks:
+  spring-boot-kafka-network:
+    driver: bridge
