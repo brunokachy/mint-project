@@ -14,7 +14,7 @@ public class Card {
 
 	private boolean isSuccess;
 
-	private String cardNumber;
+	private Integer cardNumber;
 
 	private String scheme;
 
@@ -26,14 +26,14 @@ public class Card {
 
 	public static Card createCard(
 			final Boolean isSuccess,
-			final String cardNumber,
+			final Integer cardNumber,
 			final String scheme,
 			final String type,
 			final String bank
 	) {
 
 		return new Card(
-				0l,
+				0L,
 				isSuccess,
 				cardNumber,
 				scheme,

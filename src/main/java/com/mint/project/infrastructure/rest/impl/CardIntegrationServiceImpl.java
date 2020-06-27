@@ -3,15 +3,18 @@ package com.mint.project.infrastructure.rest.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mint.project.core.cardverification.service.CardIntegrationService;
 import com.mint.project.core.exception.CardNotFoundException;
 import com.mint.project.core.shared.Card;
 import com.mint.project.infrastructure.messaging.CardMessage;
 import com.mint.project.infrastructure.messaging.Producer;
 import com.mint.project.infrastructure.rest.RestService;
-import com.mint.project.infrastructure.rest.dto.Bank;
 import com.mint.project.infrastructure.rest.dto.CardResolutionResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -43,26 +46,35 @@ public class CardIntegrationServiceImpl implements CardIntegrationService {
 		CardResolutionResponse cardResolutionResponse = responseEntity.getBody();
 		String type = cardResolutionResponse.getType();
 		String scheme = cardResolutionResponse.getScheme();
-		String bankName = "";
+		String bankName = cardResolutionResponse.getBank() != null ? cardResolutionResponse.getBank().getName() : "";
 
-		if (cardResolutionResponse.getBank() != null) {
-			Bank bank = cardResolutionResponse.getBank();
-			bankName = bank.getName();
-		}
-
-		CardMessage cardMessage = new CardMessage();
-		cardMessage.setBank(bankName);
-		cardMessage.setScheme(scheme);
-		cardMessage.setType(type);
-		producer.sendMessage(cardMessage);
+		sendNotification(bankName, scheme, type);
 
 		return Card.createCard(
 				Boolean.TRUE,
-				String.valueOf(cardNumber),
+				cardNumber,
 				scheme,
 				type,
 				bankName
 		);
+	}
+
+	@Async
+	public void sendNotification(final String bankName, final String scheme, final String type) {
+		final CardMessage cardMessage = new CardMessage();
+		cardMessage.setBank(bankName);
+		cardMessage.setScheme(scheme);
+		cardMessage.setType(type);
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String json = null;
+		try {
+			json = ow.writeValueAsString(cardMessage);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		producer.sendMessage(json);
 	}
 
 }

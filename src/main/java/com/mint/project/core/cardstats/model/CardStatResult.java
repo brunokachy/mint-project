@@ -2,7 +2,6 @@ package com.mint.project.core.cardstats.model;
 
 import java.util.Map;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,5 +20,5 @@ public class CardStatResult {
 
 	private int limit;
 
-	private Map<String, Long> payload;
+	private Map<Integer, Long> payload;
 }

@@ -1,7 +1,5 @@
 package com.mint.project.infrastructure.messaging;
 
-import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -22,8 +20,8 @@ public class Producer {
 
 	private final KafkaTemplate<String, String> kafkaTemplate;
 
-	public void sendMessage(CardMessage message) {
+	public void sendMessage(final String message) {
 		log.info(String.format("#### -> Producing message -> %s", message));
-		this.kafkaTemplate.send(topic, message.toString());
+		this.kafkaTemplate.send(topic, message);
 	}
 }

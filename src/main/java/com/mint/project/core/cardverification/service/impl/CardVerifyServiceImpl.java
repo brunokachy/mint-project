@@ -23,13 +23,13 @@ public class CardVerifyServiceImpl implements CardVerifyService {
 	private final CardIntegrationService cardIntegrationService;
 
 	@Override
-	public CardVerifyResult verify(Integer cardNumber) {
+	public CardVerifyResult verify(final Integer cardNumber) {
 
 		final Optional<Card> optionalCard = cardPersistenceService.findCardByCardNumber(cardNumber);
 
 		if (optionalCard.isPresent()) {
 			final Card card = Card.createExistingCard(optionalCard.get());
-			cardPersistenceService.saveCard(card);
+			cardPersistenceService.updateCard(card);
 			return buildResponse(card);
 		}
 

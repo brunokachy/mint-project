@@ -8,7 +8,7 @@ import java.util.Optional;
  */
 public interface CardPersistenceService {
 
-	Optional<Card> findCardByCardNumber(int cardNumber);
+	Optional<Card> findCardByCardNumber(Integer cardNumber);
 
 	void saveCard(Card card);
 

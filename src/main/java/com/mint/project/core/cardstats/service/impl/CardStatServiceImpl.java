@@ -28,7 +28,7 @@ public class CardStatServiceImpl implements CardStatService {
 
 		final long size = cardPage.size();
 
-		final Map<String, Long> payload = cardPage.stream().collect(Collectors.toMap(Card::getCardNumber, Card::getTotalRequest, (a, b) -> b));
+		final Map<Integer, Long> payload = cardPage.stream().collect(Collectors.toMap(Card::getCardNumber, Card::getTotalRequest, (a, b) -> b));
 
 		return CardStatResult.of(Boolean.TRUE, size, start, limit, payload);
 	}

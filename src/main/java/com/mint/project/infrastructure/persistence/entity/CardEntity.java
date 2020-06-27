@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,8 +23,8 @@ public class CardEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Column(nullable = false, unique = true)
-	private String cardNumber;
+	@Column(nullable = false, unique = true, updatable = false)
+	private Integer cardNumber;
 
 	@Column(nullable = false)
 	private String scheme;
@@ -37,16 +36,15 @@ public class CardEntity implements Serializable {
 
 	private long totalRequest;
 
-	public CardEntity(final long id, final String bank, final String cardNumber, final String scheme, final long totalRequest, final String type) {
+	public CardEntity(final long id, final String bank, final String scheme, final long totalRequest, final String type) {
 		this.id = id;
 		this.bank = bank;
-		this.cardNumber = cardNumber;
 		this.scheme = scheme;
 		this.totalRequest = totalRequest;
 		this.type = type;
 	}
 
-	public CardEntity(final String bank, final String cardNumber, final String scheme, final long totalRequest, final String type) {
+	public CardEntity(final String bank, final Integer cardNumber, final String scheme, final long totalRequest, final String type) {
 		this.bank = bank;
 		this.cardNumber = cardNumber;
 		this.scheme = scheme;

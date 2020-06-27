@@ -18,5 +18,5 @@ public class CardStatResponse {
 
 	int limit;
 
-	Map<String, Long> payload;
+	Map<Integer, Long> payload;
 }

@@ -10,7 +10,7 @@ public class CardConverter {
 
 	public static CardEntity convertToExistingDatabaseEntity(final Card card) {
 
-		return new CardEntity(card.getId(), card.getBank(), card.getCardNumber(), card.getScheme(), card.getTotalRequest(), card.getType());
+		return new CardEntity(card.getId(), card.getBank(), card.getScheme(), card.getTotalRequest(), card.getType());
 	}
 
 	public static CardEntity convertToNewDatabaseEntity(final Card card) {

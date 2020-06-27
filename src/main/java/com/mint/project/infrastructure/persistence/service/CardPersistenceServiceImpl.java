@@ -9,9 +9,9 @@ import javax.persistence.PersistenceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.mint.project.core.exception.CardNotFoundException;
 import com.mint.project.core.shared.Card;
 import com.mint.project.core.shared.CardPersistenceService;
 import com.mint.project.infrastructure.persistence.converter.CardConverter;
@@ -29,7 +29,7 @@ public class CardPersistenceServiceImpl implements CardPersistenceService {
 	private final CardRepository cardRepository;
 
 	@Override
-	public Optional<Card> findCardByCardNumber(final int cardNumber) {
+	public Optional<Card> findCardByCardNumber(final Integer cardNumber) {
 		final Optional<CardEntity> optionalCardEntity = cardRepository.findCardEntitiesByCardNumber(cardNumber);
 
 		return optionalCardEntity.map(CardConverter::convertToDomain);
@@ -59,7 +59,7 @@ public class CardPersistenceServiceImpl implements CardPersistenceService {
 
 	@Override
 	public List<Card> getCards(final int start, final int limit) {
-		final Pageable pageable = PageRequest.of(start, limit);
+		final Pageable pageable = PageRequest.of(start, limit, Sort.by(Sort.Direction.DESC, "totalRequest"));
 
 		final Page<CardEntity> cardEntities = cardRepository.getCardEntities(pageable);
 
